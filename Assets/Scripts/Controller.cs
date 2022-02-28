@@ -36,7 +36,7 @@ public class Controller : MonoBehaviour
             gameObject.transform.forward = move;
         }
 
-        // Changes the height position of the player..
+     
         if (Input.GetButtonDown("Jump") && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
