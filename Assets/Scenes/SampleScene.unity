@@ -246,6 +246,8 @@ MonoBehaviour:
   strafeTurnSpeed: 2.1
   sprintBtn: 304
   walkBtn: 99
+  jumpForce: 150
+  rb: {fileID: 548303580}
   MovementT: 0
 --- !u!114 &548303578
 MonoBehaviour:

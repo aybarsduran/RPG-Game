@@ -27,6 +27,10 @@ public class Controller : MonoBehaviour
     float maxSpeed;
     public KeyCode sprintBtn = KeyCode.LeftShift;
     public KeyCode walkBtn = KeyCode.C;
+  
+
+    public float jumpForce;
+    public Rigidbody rb;
 
     public enum MovementType
     {
@@ -41,15 +45,27 @@ public class Controller : MonoBehaviour
         Anim = GetComponent<Animator>();
         mainCam = Camera.main;
         normalFov = mainCam.fieldOfView;
+        rb= GetComponent<Rigidbody>(); 
 
     }
-
+   
+    
     private void LateUpdate()
     {
-       
+        Jump();
         InputMove();
         InputRotation();
         Movement();
+    }
+    void Jump()
+    {
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Anim.SetBool("jumping", true);
+            rb.AddForce(Vector3.up.normalized * jumpForce);
+            Debug.Log("zýpladý");
+        }
     }
     void Movement() {
 
@@ -132,5 +148,8 @@ public class Controller : MonoBehaviour
 
 
     }
+    
+   
+
 
 }

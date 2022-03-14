@@ -12,17 +12,12 @@ public class WeaponController : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-
-
-    
-    
-
     void Update()
     {
         anim.SetBool("iS", isSrafe);
 
 
-        if (Input.GetKeyDown(KeyCode.F)){
+        if (Input.GetKeyDown(KeyCode.Tab)){
             isSrafe = !isSrafe;
         }
 
