@@ -30,7 +30,7 @@ public class Controller : MonoBehaviour
   
 
     public float jumpForce;
-    public Rigidbody rb;
+
 
     public enum MovementType
     {
@@ -45,7 +45,7 @@ public class Controller : MonoBehaviour
         Anim = GetComponent<Animator>();
         mainCam = Camera.main;
         normalFov = mainCam.fieldOfView;
-        rb= GetComponent<Rigidbody>(); 
+      
 
     }
    
@@ -63,8 +63,8 @@ public class Controller : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             Anim.SetBool("jumping", true);
-            rb.AddForce(Vector3.up.normalized * jumpForce);
-            Debug.Log("zýpladý");
+            GetComponent<Rigidbody>().AddForce(Vector3.up.normalized * jumpForce);
+            Debug.Log("jumped");
         }
     }
     void Movement() {
@@ -74,16 +74,16 @@ public class Controller : MonoBehaviour
             inputX = Input.GetAxis("Horizontal");
             inputY = Input.GetAxis("Vertical");
 
-            Anim.SetFloat("iX", inputX, damp, Time.deltaTime * 10);//input x deðerini ix olarak tanýmladýk.
+            Anim.SetFloat("iX", inputX, damp, Time.deltaTime * 10);//input x deï¿½erini ix olarak tanï¿½mladï¿½k.
             Anim.SetFloat("iY", inputY, damp, Time.deltaTime * 10);
            
 
 
-            var isMoving = inputX != 0 || inputY != 0; //koþul saglanýyorsa hareket ediyor
+            var isMoving = inputX != 0 || inputY != 0; //kosul saglaniyorsa hareket ediyor
 
             if (isMoving)
             {
-                float yawCamera = mainCam.transform.rotation.eulerAngles.y; //bu açý kameramýzýn y eksenindeki hareketi
+                float yawCamera = mainCam.transform.rotation.eulerAngles.y; //bu aci kameramizin y eksenindeki hareketi
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,yawCamera,0),strafeTurnSpeed*Time.fixedDeltaTime);
                 Anim.SetBool("strafeMoving", true);
             }

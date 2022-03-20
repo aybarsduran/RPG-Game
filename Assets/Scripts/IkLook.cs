@@ -13,10 +13,10 @@ public class IkLook : MonoBehaviour
         
     }
 
-    private void OnAnimatorIK(int layerIndex)
+    private void OnAnimatorIK()
     {
 
-        anim.SetLookAtWeight(.6f, .2f, 1.2f);
+        anim.SetLookAtWeight(.6f, .2f, 5f);
         Ray lookAtRay= new Ray(transform.position, mainCam.transform.forward);//baþlangýç ve yönelimi
 
         anim.SetLookAtPosition(lookAtRay.GetPoint(25)); ;

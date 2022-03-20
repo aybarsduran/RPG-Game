@@ -6,6 +6,9 @@ public class WeaponController : MonoBehaviour
 {
     bool isSrafe =false;
     Animator anim;
+
+    public GameObject handWeapon;
+    public GameObject spineWeapon;
     
     private void Start()
     {
@@ -30,6 +33,19 @@ public class WeaponController : MonoBehaviour
 
             GetComponent<Controller>().MovementT = Controller.MovementType.Directional;//true ise hareket tipimiz directional
         }
+
+    }
+
+    void Equip()
+    {
+        spineWeapon.SetActive(false);
+        handWeapon.SetActive(true);
+    }
+
+    void Unequip()
+    {
+        spineWeapon.SetActive(true); 
+        handWeapon.SetActive(false);
 
     }
 }
