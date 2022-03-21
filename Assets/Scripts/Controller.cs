@@ -29,7 +29,8 @@ public class Controller : MonoBehaviour
     public KeyCode walkBtn = KeyCode.C;
   
 
-    public float jumpForce;
+    public float jumpForce = 100;
+    Rigidbody rb;
 
 
     public enum MovementType
@@ -45,14 +46,18 @@ public class Controller : MonoBehaviour
         Anim = GetComponent<Animator>();
         mainCam = Camera.main;
         normalFov = mainCam.fieldOfView;
-      
+        rb = GetComponent<Rigidbody>();
 
     }
-   
-    
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         Jump();
+    }
+
+
+    private void LateUpdate()
+    {
+        
         InputMove();
         InputRotation();
         Movement();
@@ -60,12 +65,20 @@ public class Controller : MonoBehaviour
     void Jump()
     {
 
-        if (Input.GetKey(KeyCode.Space))
+        if (MovementT == MovementType.Directional && Input.GetKeyDown(KeyCode.Space))//Normal yani directional hareket modundayken ise zıplayabiliyoruz. Fakat roll atamıyoruz.
         {
-            Anim.SetBool("jumping", true);
-            GetComponent<Rigidbody>().AddForce(Vector3.up.normalized * jumpForce);
+            Anim.SetTrigger("Jump");
+            rb.AddForce(Vector3.up * jumpForce); //Bug oldugu icin simdilik ForceMode eklemedim.
             Debug.Log("jumped");
         }
+        else if (MovementT == MovementType.Strafe && Input.GetKeyDown(KeyCode.Space))// Strafe hareket modundaysak yani elimizde silah varken zıplayamıyoruz. Sadece roll atabiliyoruz.
+        {
+            Anim.SetTrigger("Roll");
+            Debug.Log("roll");
+        }
+        
+
+        
     }
     void Movement() {
 
