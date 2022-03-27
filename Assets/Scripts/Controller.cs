@@ -26,11 +26,13 @@ public class Controller : MonoBehaviour
 
     float maxSpeed;
     public KeyCode sprintBtn = KeyCode.LeftShift;
-    public KeyCode walkBtn = KeyCode.C;
+    public KeyCode walkBtn = KeyCode.V;
   
 
     public float jumpForce = 100;
     Rigidbody rb;
+
+    
 
 
     public enum MovementType
@@ -49,7 +51,7 @@ public class Controller : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
     }
-    private void FixedUpdate()
+    private void Update()
     {
         Jump();
     }
@@ -67,19 +69,21 @@ public class Controller : MonoBehaviour
 
         if (MovementT == MovementType.Directional && Input.GetKeyDown(KeyCode.Space))//Normal yani directional hareket modundayken ise zıplayabiliyoruz. Fakat roll atamıyoruz.
         {
+           
             Anim.SetTrigger("Jump");
             rb.AddForce(Vector3.up * jumpForce); //Bug oldugu icin simdilik ForceMode eklemedim.
-            Debug.Log("jumped");
+            
+            
         }
         else if (MovementT == MovementType.Strafe && Input.GetKeyDown(KeyCode.Space))// Strafe hareket modundaysak yani elimizde silah varken zıplayamıyoruz. Sadece roll atabiliyoruz.
         {
             Anim.SetTrigger("Roll");
-            Debug.Log("roll");
+            
         }
         
-
         
     }
+    
     void Movement() {
 
         if (MovementT == MovementType.Strafe)
@@ -156,8 +160,10 @@ public class Controller : MonoBehaviour
 
         Vector3 rotOfset = mainCam.transform.TransformDirection(stickDirection);
         rotOfset.y = 0;
-
-        Model.forward = Vector3.Slerp(Model.forward, rotOfset, rotationSpeed * Time.deltaTime);
+        if (rotOfset.magnitude > 0)
+        {
+            Model.forward = Vector3.Slerp(Model.forward, rotOfset, rotationSpeed * Time.deltaTime);
+        }
 
 
     }
