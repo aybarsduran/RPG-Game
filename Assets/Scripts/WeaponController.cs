@@ -6,10 +6,11 @@ public class WeaponController : MonoBehaviour
 {
     bool isStrafe = false;
     Animator anim;
-    int attackIndex;
+    
 
     public GameObject handWeapon;
     public GameObject spineWeapon;
+    public bool isAttack = false;
 
     bool canAttack = true;
     private void Start()
@@ -22,7 +23,7 @@ public class WeaponController : MonoBehaviour
         anim.SetBool("iS", isStrafe);
 
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && anim.GetBool("isAttack")==false)
         {
             isStrafe = !isStrafe;
         }
@@ -42,13 +43,22 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isStrafe == true && canAttack == true)
         {
-            attackIndex = Random.Range(0, 3);
-            anim.SetInteger("attackIndex", attackIndex);
+            isAttack = true;
             anim.SetTrigger("Attack");
+            
         } 
         if (Input.GetKeyDown(KeyCode.Q)&& isStrafe==true && canAttack == true)
         {
             anim.SetTrigger("SpellCast");
+        }
+        if(Input.GetKeyDown(KeyCode.Mouse1)&& isStrafe==true && canAttack == true)
+        {
+            anim.SetTrigger("Block");
+            
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse1) && isStrafe == true)
+        {
+            anim.SetTrigger("ReleaseBlock");
         }
 
 
