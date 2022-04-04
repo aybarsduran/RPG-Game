@@ -5,7 +5,8 @@ using UnityEngine;
 public class CollisionDetectionSword : MonoBehaviour
 {
     public WeaponController weapon;
-    public float weaponDamage=20;
+    public float weaponDamage = 15;
+    
     
     
 
@@ -21,6 +22,8 @@ public class CollisionDetectionSword : MonoBehaviour
 
 
         }
+
+        
     }
     IEnumerator isAttackFalse() 
     {
