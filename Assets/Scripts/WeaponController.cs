@@ -21,9 +21,69 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         anim.SetBool("iS", isStrafe);
+        getInput();
+        CloseOrOpenStrafe();
+        
+    }
 
 
-        if (Input.GetKeyDown(KeyCode.Tab) && anim.GetBool("isAttack")==false)
+        void Equip()
+        {
+            spineWeapon.SetActive(false);
+            handWeapon.SetActive(true);
+        }
+
+        void Unequip()
+        {
+            spineWeapon.SetActive(true);
+            handWeapon.SetActive(false);
+
+        }
+             
+        void getInput()
+        {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isStrafe == true && canAttack == true)
+        {
+            Attack();
+        }
+        if (Input.GetKeyDown(KeyCode.Q) && isStrafe == true && canAttack == true)
+        {
+            Spell();    
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse1) && isStrafe == true && canAttack == true)
+        {
+            Block();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse1) && isStrafe == true)
+        {
+            ReleaseBlock(); 
+        }
+
+    }
+
+    void Attack()
+    {
+        isAttack = true;
+        anim.SetTrigger("Attack");
+    }
+    void Spell()
+    {
+        isAttack = true;
+        anim.SetTrigger("SpellCast");
+    }
+
+    void Block()
+    {
+        anim.SetTrigger("Block");
+    }
+    void ReleaseBlock()
+    {
+        anim.SetTrigger("ReleaseBlock");
+    }
+    void CloseOrOpenStrafe()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab) && anim.GetBool("isAttack") == false)
         {
             isStrafe = !isStrafe;
         }
@@ -41,41 +101,10 @@ public class WeaponController : MonoBehaviour
             GetComponent<IkLook>().IKlookAcma();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isStrafe == true && canAttack == true)
-        {
-            isAttack = true;
-            anim.SetTrigger("Attack");
-            
-        } 
-        if (Input.GetKeyDown(KeyCode.Q)&& isStrafe==true && canAttack == true)
-        {
-            anim.SetTrigger("SpellCast");
-        }
-        if(Input.GetKeyDown(KeyCode.Mouse1)&& isStrafe==true && canAttack == true)
-        {
-            anim.SetTrigger("Block");
-            
-        }
-        if (Input.GetKeyUp(KeyCode.Mouse1) && isStrafe == true)
-        {
-            anim.SetTrigger("ReleaseBlock");
-        }
-
-
     }
 
 
-        void Equip()
-        {
-            spineWeapon.SetActive(false);
-            handWeapon.SetActive(true);
-        }
-
-        void Unequip()
-        {
-            spineWeapon.SetActive(true);
-            handWeapon.SetActive(false);
-
-        }
+   
+   
     }
 

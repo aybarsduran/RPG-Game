@@ -5,6 +5,8 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
 
+    public float playerExperience;
+
     float inputX;
     float inputY;
     float normalFov;
@@ -166,6 +168,11 @@ public class Controller : MonoBehaviour
         }
 
 
+    }
+
+    public void getExperience(float exp)
+    {
+        playerExperience += exp; 
     }
     
    
