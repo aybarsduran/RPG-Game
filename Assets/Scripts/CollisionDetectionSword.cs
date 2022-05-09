@@ -12,7 +12,7 @@ public class CollisionDetectionSword : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy" && weapon.isAttack==true)
+        if (other.tag == "Enemy" && weapon.isAttack)
         {
             other.GetComponent<Animator>().SetTrigger("GetHit");
             other.GetComponent<EnemyController>().GetHit(weaponDamage);

@@ -13,8 +13,17 @@ public class EnemyController : MonoBehaviour
     public bool dead;
     public Controller player;
     public Transform Player;
-    float MoveSpeed = 1f;
-    float range= 5f;
+    float MoveSpeed = 2f;
+    float triggerRange= 25f;
+    public bool isFollowing;
+    bool attack = false;
+
+    float attackRange = 8f;
+    float distancetoPlayer;
+    bool isAttacking;
+    public Animator animPlayer;
+
+
 
 
 
@@ -23,14 +32,22 @@ public class EnemyController : MonoBehaviour
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
+        isAttacking = false;
         
+        
+       
+
+
     }
     public void Update()
     {
 
-        
-        ChasePlayer();  
-        
+        distancetoPlayer = Vector3.Distance(transform.position, Player.position);
+        ChasePlayer();
+        Attack();
+        StopChasing();
+        print(distancetoPlayer);
+
 
     }
     public void GetHit(float damage)
@@ -48,16 +65,28 @@ public class EnemyController : MonoBehaviour
     }
     public void ChasePlayer()
     {
-        if (Vector3.Distance(transform.position, Player.position) >= range)
+        if (distancetoPlayer <= triggerRange && !isAttacking)
         {
+            
             anim.SetFloat("speed", 1);
             transform.LookAt(player.transform);
-
             transform.position += transform.forward * MoveSpeed * Time.deltaTime;
-
+     
+          
         }
         
+
     }
+    public void StopChasing()
+    {
+        if (distancetoPlayer >= triggerRange)
+        {
+            anim.SetFloat("speed", 0);
+            isAttacking = false;
+
+        }
+    }
+    
     public void Die()
     {
         dead = true;
@@ -71,14 +100,30 @@ public class EnemyController : MonoBehaviour
         print("A bag of coins");
     }
 
-    
-   
-    IEnumerator isAttackFalse()
+
+  
+    IEnumerator AttackCooldownForEnemy()
     {
-       
-        yield return new WaitForSeconds(1f);
+        attack = true;
+        anim.SetTrigger("AttackToPlayer");
+        animPlayer.SetTrigger("GetHit");
+
+        yield return new WaitForSeconds(5f);
+        attack=false;
+
+    }
+    void Attack()
+    {
+        if (distancetoPlayer <= attackRange)
+        {
+            isAttacking = true;
+            StopChasing();
+            anim.SetFloat("speed", 0);
+            if(!attack)
+            StartCoroutine(AttackCooldownForEnemy());
 
 
+        }
     }
 
 
