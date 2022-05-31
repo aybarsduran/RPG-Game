@@ -5,12 +5,15 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     bool isStrafe = false;
-    Animator anim;
     
+    Animator anim;
+    public SFXManager SFXmanager;
 
     public GameObject handWeapon;
     public GameObject spineWeapon;
     public bool isAttack = false;
+
+   
 
     bool canAttack = true;
     private void Start()
@@ -65,7 +68,11 @@ public class WeaponController : MonoBehaviour
     void Attack()
     {
         isAttack = true;
+        
         anim.SetTrigger("Attack");
+        SFXmanager.PlaySwordHit();
+       
+        
     }
     void Spell()
     {
@@ -81,10 +88,11 @@ public class WeaponController : MonoBehaviour
     {
         anim.SetTrigger("ReleaseBlock");
     }
-    void CloseOrOpenStrafe()
+    public void CloseOrOpenStrafe()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && anim.GetBool("isAttack") == false)
         {
+            SFXmanager.PlayPullSword();
             isStrafe = !isStrafe;
         }
 

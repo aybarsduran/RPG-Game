@@ -21,11 +21,12 @@ public class ChaseState : MonoBehaviour
 
     private void Update()
     {
-
-        animator.SetFloat("speed", 1);
         distanceToPlayer = Vector3.Distance(transform.position, Player.position);
-        transform.LookAt(Player.transform);
-        transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        
+
+            animator.SetFloat("speed", 1);
+            transform.LookAt(Player.transform);
+            transform.position += transform.forward * moveSpeed * Time.deltaTime;
 
        
     }

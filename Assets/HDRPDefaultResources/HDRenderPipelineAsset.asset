@@ -150,10 +150,10 @@ MonoBehaviour:
       isFptlEnabled: 0
   m_RenderPipelineResources: {fileID: 11400000, guid: 3ce144cff5783da45aa5d4fdc2da14b7, type: 2}
   m_RenderPipelineRayTracingResources: {fileID: 0}
-  m_DefaultVolumeProfile: {fileID: 11400000, guid: 1a61c200766fd1d40866bf2dbe95ce9d, type: 2}
+  m_DefaultVolumeProfile: {fileID: 11400000, guid: 3f9600637c5b260439eaee0ef9b85196, type: 2}
   m_LensAttenuation: 0
   m_UseRenderGraph: 1
-  m_DefaultLookDevProfile: {fileID: 11400000, guid: 0632f2c1669be9e41a9dfed755f03a96, type: 2}
+  m_DefaultLookDevProfile: {fileID: 11400000, guid: 2df7346bf446eef45a07b7793d435903, type: 2}
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
       data1: 72198262773251917
@@ -165,7 +165,7 @@ MonoBehaviour:
     maximumLODLevelMode: 0
     maximumLODLevelQualityLevel: 0
     sssQualityMode: 0
-    sssQualityLevel: 0
+    sssQualityLevel: 1
     sssCustomSampleBudget: 20
     materialQuality: 0
   m_RenderingPathDefaultBakedOrCustomReflectionFrameSettings:
@@ -226,7 +226,7 @@ MonoBehaviour:
     customBufferFormat: 12
     supportedLitShaderMode: 2
     planarReflectionResolution:
-      m_Values: 000100000004000000080000
+      m_Values: 000100000004000000040000
       m_SchemaId:
         m_Id: With3Levels
     supportDecals: 1
@@ -440,8 +440,8 @@ MonoBehaviour:
   m_DefaultMaterialQualityLevel: 4
   diffusionProfileSettings: {fileID: 0}
   diffusionProfileSettingsList:
-  - {fileID: 11400000, guid: 900e09efa0cf3054883712ecc3d0ba5b, type: 2}
-  - {fileID: 11400000, guid: 96a56cebde308e149b5f2a1eec0c3098, type: 2}
+  - {fileID: 11400000, guid: 4302727e66380af4d8ae5effcd0e94bb, type: 2}
+  - {fileID: 11400000, guid: 9464d3d6f39454f4a9b08309386f56ec, type: 2}
   beforeTransparentCustomPostProcesses: []
   beforeTAACustomPostProcesses: []
   beforePostProcessCustomPostProcesses: []

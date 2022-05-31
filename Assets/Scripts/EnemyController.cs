@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
     Animator anim;
-    public Animator animPlayer;
 
-    public float maxHealth = 100f;
+    public float maxHealth = 1000f;
     public float expGranted;
     public float attackDamage;
     public float currentHealth;
@@ -16,131 +16,30 @@ public class EnemyController : MonoBehaviour
 
     public Controller player;
     public Transform Player;
-
-    float moveSpeed = 3f;
-    float triggerRange = 25f;
-    float attackRange = 8f;
-
-    float distanceToPlayer;
-
-    bool isAttacking;
-
-
-    float randomPatrolRange;
     
 
+    public float distance;
+    Vector3 groundDistance;
 
-    public enum States
-    {
-        AttackState,
-        ChaseState,
-        PatrolState,
-        
-    }
-    public States state;
+    public HealthBar healthBar;
 
-
-
+    
     public void Start()
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
-        isAttacking = false;
-        state = States.PatrolState;
-        Patrol();
-
-        
-        
+        groundDistance = new Vector3(transform.position.x, 0f, transform.position.z);
+        healthBar.SetHealth(maxHealth);
        
-
-
+       
     }
     public void Update()
     {
-
-        distanceToPlayer = Vector3.Distance(transform.position, Player.position);
-       // print(distanceToPlayer);
-        StateManager();
-       
-
-    }
-    
-    public void ChasePlayer()
-    {
-        Debug.Log("chasing");
-        transform.LookAt(Player.transform);
-        anim.SetFloat("speed", 1);
-        transform.position += transform.forward * moveSpeed * Time.deltaTime;
-
+        distance = Vector3.Distance(transform.position, groundDistance);
+        
     }
    
     
-
-    
-    void Attack()
-    {
-        if (distanceToPlayer <= attackRange)
-        {
-
-
-            if (!isAttacking)
-                StartCoroutine(AttackToPlayer());
-
-
-        }
-
-    }
-    IEnumerator AttackToPlayer()
-    {
-        isAttacking = true;
-        anim.SetTrigger("AttackToPlayer");
-        animPlayer.SetTrigger("GetHit");
-
-        yield return new WaitForSeconds(4f);
-        isAttacking = false;
-
-    }
-    void Patrol()
-    {
-        //randomPatrolRange = Random.Range(1, 25);
-        //transform.Translate(randomPatrolRange,transform.position.y,randomPatrolRange);
-        anim.SetFloat("speed", 0);
-    }
-
-    public void StateManager()
-    {
-        if (state == States.PatrolState && distanceToPlayer < triggerRange)
-        {
-            ChasePlayer();
-            
-        }
-
-        if(state == States.ChaseState && distanceToPlayer < attackRange)
-        {
-            Attack();
-           
-        }
-        if(state == States.ChaseState && distanceToPlayer > triggerRange)
-        {
-            Patrol();
-            
-        }
-
-        if(state== States.AttackState && distanceToPlayer > attackRange && distanceToPlayer< triggerRange)
-        {
-            ChasePlayer();
-            
-        }
-
-        if(state== States.AttackState && distanceToPlayer > attackRange && distanceToPlayer > triggerRange)
-        {
-            Patrol();
-            
-        }
-        
-
-    }
-
     public void Die()
     {
         dead = true;
@@ -157,8 +56,8 @@ public class EnemyController : MonoBehaviour
     {
 
         currentHealth -= damage;
-
-
+        healthBar.SetHealth(currentHealth);
+       
         if (currentHealth <= 0)
         {
             Die();

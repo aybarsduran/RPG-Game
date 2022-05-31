@@ -34,7 +34,11 @@ public class Controller : MonoBehaviour
     public float jumpForce = 100;
     Rigidbody rb;
 
-    
+    public float playerHealth = 1000f;
+
+    public HealthBar healthBar;
+
+   
 
 
     public enum MovementType
@@ -51,11 +55,15 @@ public class Controller : MonoBehaviour
         mainCam = Camera.main;
         normalFov = mainCam.fieldOfView;
         rb = GetComponent<Rigidbody>();
+       
+        
 
     }
     private void Update()
     {
         Jump();
+      
+       
     }
 
 
@@ -87,15 +95,22 @@ public class Controller : MonoBehaviour
     }
     
     void Movement() {
+        
+      
 
         if (MovementT == MovementType.Strafe)
         {
+          
             inputX = Input.GetAxis("Horizontal");
             inputY = Input.GetAxis("Vertical");
 
             Anim.SetFloat("iX", inputX, damp, Time.deltaTime * 10);//input x de�erini ix olarak tan�mlad�k.
             Anim.SetFloat("iY", inputY, damp, Time.deltaTime * 10);
-           
+
+            
+
+
+
 
 
             var isMoving = inputX != 0 || inputY != 0; //kosul saglaniyorsa hareket ediyor
@@ -105,6 +120,7 @@ public class Controller : MonoBehaviour
                 float yawCamera = mainCam.transform.rotation.eulerAngles.y; //bu aci kameramizin y eksenindeki hareketi
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0,yawCamera,0),strafeTurnSpeed*Time.fixedDeltaTime);
                 Anim.SetBool("strafeMoving", true);
+                
             }
             else
             {
@@ -118,6 +134,7 @@ public class Controller : MonoBehaviour
             InputRotation();
 
             stickDirection = new Vector3(inputX, 0, inputY);
+            
 
             if (Input.GetKey(sprintBtn))
             {
@@ -137,10 +154,12 @@ public class Controller : MonoBehaviour
             }
             else
             {
+                
                 mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, normalFov, Time.deltaTime * 2);
                 maxSpeed = 1;
                 inputX = Input.GetAxis("Horizontal");
                 inputY = Input.GetAxis("Vertical");
+                
 
             }
 
@@ -155,6 +174,26 @@ public class Controller : MonoBehaviour
     void InputMove()
     {
         Anim.SetFloat("speed", Vector3.ClampMagnitude(stickDirection, maxSpeed).magnitude, damp, Time.deltaTime * 10);
+       
+
+    }
+
+    public void getDamage(float damage)
+    {
+        playerHealth -= damage;
+        healthBar.SetHealth(playerHealth);
+
+
+
+        if (playerHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Anim.SetBool("isDead", true);
     }
 
     void InputRotation()

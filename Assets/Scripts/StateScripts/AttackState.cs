@@ -8,6 +8,10 @@ public class AttackState : MonoBehaviour
     public bool isAttacking;
     public Animator playerAnimator;
     Animator anim;
+    float attackDamage = 100f;
+    public Controller player;
+
+    public SFXManager manager;
 
     private void Start()
     {
@@ -26,7 +30,6 @@ public class AttackState : MonoBehaviour
     }
     void Attack()
     {
-        Debug.Log("calismiyor");
         
         if (!isAttacking)
         {
@@ -38,9 +41,11 @@ public class AttackState : MonoBehaviour
         Debug.Log("calisti");
         isAttacking = true;
         anim.SetTrigger("AttackToPlayer");
+        manager.PlayDragonAttack();
         playerAnimator.SetTrigger("GetHit");
+        player.getDamage(attackDamage);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         isAttacking= false;
 
     }
