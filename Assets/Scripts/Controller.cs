@@ -104,7 +104,7 @@ public class Controller : MonoBehaviour
             inputX = Input.GetAxis("Horizontal");
             inputY = Input.GetAxis("Vertical");
 
-            Anim.SetFloat("iX", inputX, damp, Time.deltaTime * 10);//input x de�erini ix olarak tan�mlad�k.
+            Anim.SetFloat("iX", inputX, damp, Time.deltaTime * 10);//input x degerini ix olarak tan�mlad�k.
             Anim.SetFloat("iY", inputY, damp, Time.deltaTime * 10);
 
             
